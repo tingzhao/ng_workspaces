@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PickerResults from './PickerResults';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -24,7 +25,9 @@ class ImagePicker extends React.Component {
     super(props);
     this.state = {
       serverUrl: null,
+      coordinates: '',
       submitted: false,
+      results: null,
     };
   }
 
@@ -71,9 +74,27 @@ class ImagePicker extends React.Component {
       .catch(() => {});
   };
 
+  handleSearch = e => {
+    e.preventDefault();
+    const {serverUrl, coordinates} = this.state;
+    let coord_array = coordinates.split(',');
+    if (coord_array.length !== 3) {
+      alert('Specify comma delimited x,y,z, coordinates');
+      return;
+    }
+
+    // fetch server info, set state to true if successful
+    fetch(serverUrl + '/findimages?coords=' + coordinates)
+      .then(result => result.json())
+      .then(response => {
+        this.setState({results: response});
+      })
+      .catch(() => {});
+  };
+
   render() {
-    const {user, children, location, classes} = this.props;
-    const {serverUrl, submitted} = this.state;
+    const {user, children, location, classes, actions} = this.props;
+    const {serverUrl, submitted, results} = this.state;
 
     if (!submitted) {
       return (
@@ -108,10 +129,29 @@ class ImagePicker extends React.Component {
         <p>ServerUrl: {serverUrl}</p>
         <div className={classes.window}>{children}</div>
         <p>Looking at location: {location.pathname}</p>
-        <p>
-          Other page content can go here - or use a Grid Layout to add a
-          sidebar, etc.
-        </p>
+        <div className={classes.inputForm}>
+          <form onSubmit={this.handleSearch}>
+            <TextField
+              id="coordinates"
+              label="Coordinates"
+              className={classes.textField}
+              margin="normal"
+              onChange={event =>
+                this.setState({coordinates: event.target.value})
+              }
+            />
+            <br />
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={this.handleSearch}>
+              Submit
+            </Button>
+          </form>
+        </div>
+        {results !== null && (
+          <PickerResults results={results} actions={actions} />
+        )}
       </div>
     );
   }
