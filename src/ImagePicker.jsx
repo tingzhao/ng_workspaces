@@ -5,6 +5,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   window: {
@@ -130,31 +131,37 @@ class ImagePicker extends React.Component {
         )}
         {!user.get('loggedIn') && <p>Not logged in.</p>}
         <p>ServerUrl: {serverUrl}</p>
-        <div className={classes.window}>{children}</div>
-        <p>Looking at location: {location.pathname}</p>
-        <div className={classes.inputForm}>
-          <form onSubmit={this.handleSearch}>
-            <TextField
-              id="coordinates"
-              label="Coordinates"
-              className={classes.textField}
-              margin="normal"
-              onChange={event =>
-                this.setState({coordinates: event.target.value})
-              }
-            />
-            <br />
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={this.handleSearch}>
-              Submit
-            </Button>
-          </form>
-        </div>
-        {results !== null && (
-          <PickerResults results={results} actions={actions} />
-        )}
+
+        <Grid container spacing={3}>
+          <Grid item xs={9}>
+            <div className={classes.window}>{children}</div>
+          </Grid>
+          <Grid item xs={3}>
+            <div className={classes.inputForm}>
+              <form onSubmit={this.handleSearch}>
+                <TextField
+                  id="coordinates"
+                  label="Coordinates"
+                  className={classes.textField}
+                  margin="normal"
+                  onChange={event =>
+                    this.setState({coordinates: event.target.value})
+                  }
+                />
+                <br />
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={this.handleSearch}>
+                  Submit
+                </Button>
+              </form>
+            </div>
+            {results !== null && (
+              <PickerResults results={results} actions={actions} />
+            )}
+          </Grid>
+        </Grid>
       </div>
     );
   }
