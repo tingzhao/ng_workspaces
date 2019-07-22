@@ -124,45 +124,44 @@ class ImagePicker extends React.Component {
     }
 
     return (
-      <div>
-        <Typography variant="h5">ImagePicker</Typography>
-        {user.get('loggedIn') && (
-          <p>logged in as: {user.get('userInfo').username}</p>
-        )}
-        {!user.get('loggedIn') && <p>Not logged in.</p>}
-        <p>ServerUrl: {serverUrl}</p>
-
-        <Grid container spacing={3}>
-          <Grid item xs={9}>
-            <div className={classes.window}>{children}</div>
-          </Grid>
-          <Grid item xs={3}>
-            <div className={classes.inputForm}>
-              <form onSubmit={this.handleSearch}>
-                <TextField
-                  id="coordinates"
-                  label="Coordinates"
-                  className={classes.textField}
-                  margin="normal"
-                  onChange={event =>
-                    this.setState({coordinates: event.target.value})
-                  }
-                />
-                <br />
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={this.handleSearch}>
-                  Submit
-                </Button>
-              </form>
-            </div>
-            {results !== null && (
-              <PickerResults results={results} actions={actions} />
-            )}
-          </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h5">ImagePicker</Typography>
+          {user.get('loggedIn') && (
+            <p>logged in as: {user.get('userInfo').username}</p>
+          )}
+          {!user.get('loggedIn') && <p>Not logged in.</p>}
+          <p>ServerUrl: {serverUrl}</p>
         </Grid>
-      </div>
+        <Grid item xs={9}>
+          <div className={classes.window}>{children}</div>
+        </Grid>
+        <Grid item xs={3}>
+          <div className={classes.inputForm}>
+            <form onSubmit={this.handleSearch}>
+              <TextField
+                id="coordinates"
+                label="Coordinates"
+                className={classes.textField}
+                margin="normal"
+                onChange={event =>
+                  this.setState({coordinates: event.target.value})
+                }
+              />
+              <br />
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={this.handleSearch}>
+                Submit
+              </Button>
+            </form>
+          </div>
+          {results !== null && (
+            <PickerResults results={results} actions={actions} />
+          )}
+        </Grid>
+      </Grid>
     );
   }
 }
