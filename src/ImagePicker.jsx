@@ -97,7 +97,7 @@ class ImagePicker extends React.Component {
   };
 
   render() {
-    const {user, children, location, classes, actions} = this.props;
+    const {user, children, classes, actions} = this.props;
     const {serverUrl, submitted, results} = this.state;
 
     if (!submitted) {
