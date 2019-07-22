@@ -68,6 +68,7 @@ class ImagePicker extends React.Component {
     fetch(serverUrl + '/info')
       .then(result => result.json())
       .then(response => {
+        // json response encodes a neuroglancer source in "dbsrc"
         this.initViewer(response);
         this.setState({submitted: true});
       })
@@ -84,7 +85,9 @@ class ImagePicker extends React.Component {
     }
 
     // fetch server info, set state to true if successful
-    fetch(serverUrl + '/findimages?coords=' + coordinates)
+    // TODO: support pagination by setting skip accordingly
+    // (currently: limits the number of results to 10, skips 0)
+    fetch(serverUrl + '/findimages?skip=0&limit=10&coords=' + coordinates)
       .then(result => result.json())
       .then(response => {
         this.setState({results: response});

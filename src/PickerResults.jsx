@@ -26,9 +26,11 @@ class PickerResults extends React.Component {
         {results.length === 0 ? (
           <Typography variant="h5">No results</Typography>
         ) : (
-          // results are a list of {"x","y","z","orientation","score"}
+          // results are a list of {"x","y","z","orientation","score","window"}
           // score = 1 is best match, score = 0 is bad match
-          // stride is encoded as xsize, ysize, zsize (small dim defines the plane)
+          // stride is encoded as xsize, ysize, zsize (small dim defines the cut plane
+          // if xsize=ysize=zsize, the stride is isotropic and any orientation can be used)
+          // window defines the patch size used by the algorithm and can establish the zoom level
           <div>
             {results.map((entry, idx) => {
               return (
