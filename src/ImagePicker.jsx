@@ -125,7 +125,7 @@ class ImagePicker extends React.Component {
 
     return (
       <Grid container>
-        <Grid item xs={12}>
+        <Grid item sm={12}>
           <Typography variant="h5">ImagePicker</Typography>
           {user.get('loggedIn') && (
             <p>logged in as: {user.get('userInfo').username}</p>
@@ -133,10 +133,10 @@ class ImagePicker extends React.Component {
           {!user.get('loggedIn') && <p>Not logged in.</p>}
           <p>ServerUrl: {serverUrl}</p>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item sm={9} xs={12}>
           <div className={classes.window}>{children}</div>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item sm={3} xs={12}>
           <div className={classes.inputForm}>
             <form onSubmit={this.handleSearch}>
               <TextField
