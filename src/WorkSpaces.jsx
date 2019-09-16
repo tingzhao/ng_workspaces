@@ -8,7 +8,7 @@ import { initViewer } from './actions/viewer';
 // browser can support neuroglancer. If it can't we need to render that message
 // instead of the component. -> maybe this should go in the neuroglancer component,
 // if possible.
-import NeuroGlancer from "@janelia-flyem/react-neuroglancer";
+import NeuroGlancer from "@tingzhao/react-neuroglancer";
 
 import "./Neuroglancer.css";
 
